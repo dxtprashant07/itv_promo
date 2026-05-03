@@ -1,0 +1,130 @@
+{
+  "feature_cols": [
+    "channel",
+    "promo_title",
+    "content_type",
+    "event_type",
+    "genre_guess",
+    "promo_length_seconds",
+    "hour",
+    "minute",
+    "day_of_week",
+    "is_weekend",
+    "time_band",
+    "promo_position_type",
+    "promo_in_break",
+    "break_event_position",
+    "break_total_events",
+    "break_position_pct",
+    "preceded_by_break",
+    "lead_to_next_program_min",
+    "prev_promo_title",
+    "next_promo_title",
+    "weather_station",
+    "weather_tmax_c",
+    "weather_tmin_c",
+    "weather_rain_mm",
+    "weather_sun_hours",
+    "weather_bad_index",
+    "weather_indoor_viewing_index",
+    "ott_avg_watch_pct",
+    "ott_dropoff_prob",
+    "ott_hook_strength",
+    "ott_visual_intensity",
+    "netflix_popularity_score",
+    "netflix_rating_mean",
+    "synthetic_premiere_probability",
+    "synthetic_production_year_mean",
+    "promo_fatigue_index",
+    "attention_context_score"
+  ],
+  "categorical_cols": [
+    "channel",
+    "promo_title",
+    "content_type",
+    "event_type",
+    "genre_guess",
+    "time_band",
+    "promo_position_type",
+    "prev_promo_title",
+    "next_promo_title",
+    "weather_station"
+  ],
+  "category_values": {
+    "channel": [
+      "Viasat History CEE"
+    ],
+    "promo_title": [
+      "Alexander's Lost World - Tue @ 2100",
+      "Animated Ident 1 - Napoleon HD cutdown 10",
+      "Animated Ident 2 - Pushkin HD cutdown 10",
+      "Annihilation: The Destruction - Tonight @ 2250",
+      "EXPHIS/EVENT BLACK OPT-IN",
+      "EXPHIS/EVENT BLACK OPT-OUT",
+      "Europe's Last Warrior Kings - Wed @ 2100",
+      "Promotion",
+      "Queen Victoria's Letters: A Monarch - Thurs @ 2150"
+    ],
+    "content_type": [
+      "Jingle",
+      "Promo"
+    ],
+    "event_type": [
+      "Primary",
+      "Primary-BreakHeader"
+    ],
+    "genre_guess": [
+      "general",
+      "history_doc",
+      "promo"
+    ],
+    "time_band": [
+      "morning"
+    ],
+    "promo_position_type": [
+      "break_end",
+      "break_middle",
+      "programme_lead_in"
+    ],
+    "prev_promo_title": [
+      "Alexander's Lost World - Tue @ 2100",
+      "Animated Ident 2 - Pushkin HD cutdown 10",
+      "Annihilation: The Destruction - Tonight @ 2250",
+      "EXPHIS/EVENT BLACK OPT-OUT",
+      "Europe's Last Warrior Kings - Wed @ 2100",
+      "Promotion",
+      "Queen Victoria's Letters: A Monarch - Thurs @ 2150",
+      "viasathistory_CEE_next",
+      "viasathistory_CEE_watching"
+    ],
+    "next_promo_title": [
+      "Alexander's Lost World - Tue @ 2100",
+      "Animated Ident 2 - Pushkin HD cutdown 10",
+      "Annihilation: The Destruction - Tonight @ 2250",
+      "Conspiracy",
+      "Day When...",
+      "EXPHIS/EVENT BLACK OPT-IN",
+      "EXPHIS/EVENT BLACK OPT-OUT",
+      "Europe's Last Warrior Kings - Wed @ 2100",
+      "Forbidden History",
+      "HistoryCEE_topright",
+      "Promotion",
+      "Queen Victoria's Letters: A Monarch - Thurs @ 2150",
+      "War Junk"
+    ],
+    "weather_station": [
+      "hurn"
+    ]
+  },
+  "cutoff_date": "2024-02-22 08:20:15",
+  "scale_pos_weight": 4.1794522414497886,
+  "leaky_columns_removed": [
+    "actual_status",
+    "actual_start_offset_seconds",
+    "actual_duration_seconds",
+    "duration_diff_seconds",
+    "was_missed",
+    "observed_effectiveness_score",
+    "best_possible_score"
+  ]
+}

@@ -1,0 +1,251 @@
+date,datetime,channel,promo_title,recommended_position,recommended_offset_minutes,uplift_if_optimised,observed_effectiveness_score,best_possible_score,slm_scheduler_output
+2018-07-18,2018-07-18 06:00:00,Viasat History CEE,IWHIS132,keep,0,0.0,40.83,38.23,Keep 'IWHIS132' as scheduled at 06:00. Current placement is acceptable. Estimated effectiveness 40.8/100.
+2018-07-18,2018-07-18 06:46:09,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 06:46:09,Viasat History CEE,VWOPOUT,keep,0,0.0,36.76,35.24,Keep 'VWOPOUT' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 36.8/100.
+2018-07-18,2018-07-18 06:46:10,Viasat History CEE,VW02684,keep,0,1.53,28.42,29.95,Keep 'VW02684' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 28.4/100.
+2018-07-18,2018-07-18 06:46:25,Viasat History CEE,VW02733,keep,0,0.0,40.47,38.23,Keep 'VW02733' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 40.5/100.
+2018-07-18,2018-07-18 06:46:55,Viasat History CEE,VW02730,keep,0,0.14,38.09,38.23,Keep 'VW02730' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 38.1/100.
+2018-07-18,2018-07-18 06:47:25,Viasat History CEE,VW02717,keep,0,0.0,41.53,38.23,Keep 'VW02717' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 41.5/100.
+2018-07-18,2018-07-18 06:47:55,Viasat History CEE,IWHIS134,keep,0,0.4,37.83,38.23,Keep 'IWHIS134' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 37.8/100.
+2018-07-18,2018-07-18 06:48:05,Viasat History CEE,VWOPIN,keep,0,2.37,32.87,35.24,Keep 'VWOPIN' as scheduled at 06:48. Current placement is acceptable. Estimated effectiveness 32.9/100.
+2018-07-18,2018-07-18 07:04:33,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 07:04:33,Viasat History CEE,VWOPOUT,keep,0,0.0,35.29,33.64,Keep 'VWOPOUT' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 35.3/100.
+2018-07-18,2018-07-18 07:04:34,Viasat History CEE,VW02684,keep,0,0.26,28.09,28.35,Keep 'VW02684' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 28.1/100.
+2018-07-18,2018-07-18 07:04:49,Viasat History CEE,VW02733,keep,0,1.75,34.88,36.63,Keep 'VW02733' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 34.9/100.
+2018-07-18,2018-07-18 07:05:19,Viasat History CEE,VW02730,keep,0,0.0,37.46,36.63,Keep 'VW02730' as scheduled at 07:05. Current placement is acceptable. Estimated effectiveness 37.5/100.
+2018-07-18,2018-07-18 07:05:49,Viasat History CEE,VW02717,keep,0,4.63,32.0,36.63,Keep 'VW02717' as scheduled at 07:05. Current placement is acceptable. Estimated effectiveness 32.0/100.
+2018-07-18,2018-07-18 07:06:19,Viasat History CEE,IWHIS134,keep,0,6.26,30.37,36.63,Keep 'IWHIS134' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 30.4/100.
+2018-07-18,2018-07-18 07:06:29,Viasat History CEE,VWOPIN,keep,0,0.0,35.74,33.64,Keep 'VWOPIN' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 35.7/100.
+2018-07-18,2018-07-18 07:22:21,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 07:22:21,Viasat History CEE,VWOPOUT,keep,0,3.49,28.55,32.04,Keep 'VWOPOUT' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 28.6/100.
+2018-07-18,2018-07-18 07:22:22,Viasat History CEE,VW02684,keep,0,0.0,27.62,26.75,Keep 'VW02684' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 27.6/100.
+2018-07-18,2018-07-18 07:22:37,Viasat History CEE,VW02733,keep,0,0.91,34.12,35.03,Keep 'VW02733' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 34.1/100.
+2018-07-18,2018-07-18 07:23:07,Viasat History CEE,VW02730,keep,0,3.0,32.03,35.03,Keep 'VW02730' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 32.0/100.
+2018-07-18,2018-07-18 07:23:37,Viasat History CEE,VW02717,move_to_early_prime,30,11.24,23.79,35.03,Move 'VW02717' from 07:23 to move to early prime (+30 min). Estimated uplift 11.2 points from 23.8 to 35.0.
+2018-07-18,2018-07-18 07:24:07,Viasat History CEE,IWHIS134,keep,0,0.14,34.89,35.03,Keep 'IWHIS134' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 34.9/100.
+2018-07-18,2018-07-18 07:24:17,Viasat History CEE,VWOPIN,keep,0,0.22,31.82,32.04,Keep 'VWOPIN' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 31.8/100.
+2018-07-18,2018-07-18 08:00:48,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 08:00:48,Viasat History CEE,VWOPOUT,move_to_early_prime,30,8.69,21.75,30.44,Move 'VWOPOUT' from 08:00 to move to early prime (+30 min). Estimated uplift 8.7 points from 21.8 to 30.4.
+2018-07-18,2018-07-18 08:00:49,Viasat History CEE,VW02684,keep,0,0.0,27.92,25.15,Keep 'VW02684' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 27.9/100.
+2018-07-18,2018-07-18 08:01:04,Viasat History CEE,VW02733,keep,0,4.53,28.9,33.43,Keep 'VW02733' as scheduled at 08:01. Current placement is acceptable. Estimated effectiveness 28.9/100.
+2018-07-18,2018-07-18 08:01:34,Viasat History CEE,VW02730,keep,0,3.22,30.21,33.43,Keep 'VW02730' as scheduled at 08:01. Current placement is acceptable. Estimated effectiveness 30.2/100.
+2018-07-18,2018-07-18 08:02:04,Viasat History CEE,VW02717,move_to_early_prime,30,8.08,25.35,33.43,Move 'VW02717' from 08:02 to move to early prime (+30 min). Estimated uplift 8.1 points from 25.4 to 33.4.
+2018-07-18,2018-07-18 08:02:34,Viasat History CEE,IWHIS134,keep,0,5.5,27.93,33.43,Keep 'IWHIS134' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 27.9/100.
+2018-07-18,2018-07-18 08:02:44,Viasat History CEE,VWOPIN,keep,0,4.01,26.43,30.44,Keep 'VWOPIN' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 26.4/100.
+2018-07-18,2018-07-18 08:18:53,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 08:18:53,Viasat History CEE,VWOPOUT,keep,0,4.28,24.56,28.84,Keep 'VWOPOUT' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness 24.6/100.
+2018-07-18,2018-07-18 08:18:54,Viasat History CEE,VW02684,move_to_early_prime,30,9.7,13.85,23.55,Move 'VW02684' from 08:18 to move to early prime (+30 min). Estimated uplift 9.7 points from 13.8 to 23.6.
+2018-07-18,2018-07-18 08:19:09,Viasat History CEE,VW02733,keep,0,1.38,30.45,31.83,Keep 'VW02733' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 30.4/100.
+2018-07-18,2018-07-18 08:19:39,Viasat History CEE,VW02730,keep,0,2.97,28.86,31.83,Keep 'VW02730' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 28.9/100.
+2018-07-18,2018-07-18 08:20:09,Viasat History CEE,VW02717,keep,0,7.9,23.93,31.83,Keep 'VW02717' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 23.9/100.
+2018-07-18,2018-07-18 08:20:39,Viasat History CEE,IWHIS134,keep,0,3.94,27.89,31.83,Keep 'IWHIS134' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 27.9/100.
+2018-07-18,2018-07-18 08:20:49,Viasat History CEE,VWOPIN,keep,0,5.43,23.41,28.84,Keep 'VWOPIN' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 23.4/100.
+2018-07-18,2018-07-18 08:36:56,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 08:36:56,Viasat History CEE,VWOPOUT,keep,0,0.0,27.44,27.24,Keep 'VWOPOUT' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 27.4/100.
+2018-07-18,2018-07-18 08:36:57,Viasat History CEE,VW02684,keep,0,5.03,16.92,21.95,Keep 'VW02684' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 16.9/100.
+2018-07-18,2018-07-18 08:37:12,Viasat History CEE,VW02733,move_to_early_prime,30,10.48,19.75,30.23,Move 'VW02733' from 08:37 to move to early prime (+30 min). Estimated uplift 10.5 points from 19.8 to 30.2.
+2018-07-18,2018-07-18 08:37:42,Viasat History CEE,VW02730,move_to_early_prime,30,8.24,21.99,30.23,Move 'VW02730' from 08:37 to move to early prime (+30 min). Estimated uplift 8.2 points from 22.0 to 30.2.
+2018-07-18,2018-07-18 08:38:12,Viasat History CEE,VW02717,keep,0,5.47,24.76,30.23,Keep 'VW02717' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 24.8/100.
+2018-07-18,2018-07-18 08:38:42,Viasat History CEE,IWHIS134,move_to_early_prime,30,27.47,0.0,27.47,Move 'IWHIS134' from 08:38 to move to early prime (+30 min). Estimated uplift 27.5 points from 0.0 to 27.5.
+2018-07-18,2018-07-18 08:38:52,Viasat History CEE,VWOPIN,keep,0,7.16,20.08,27.24,Keep 'VWOPIN' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 20.1/100.
+2018-07-18,2018-07-18 08:50:39,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 08:50:39,Viasat History CEE,VWOPOUT,move_to_early_prime,30,10.74,14.9,25.64,Move 'VWOPOUT' from 08:50 to move to early prime (+30 min). Estimated uplift 10.7 points from 14.9 to 25.6.
+2018-07-18,2018-07-18 08:50:40,Viasat History CEE,VW02684,keep,0,4.9,15.45,20.35,Keep 'VW02684' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 15.4/100.
+2018-07-18,2018-07-18 08:50:55,Viasat History CEE,VW02733,move_to_early_prime,30,9.28,19.35,28.63,Move 'VW02733' from 08:50 to move to early prime (+30 min). Estimated uplift 9.3 points from 19.4 to 28.6.
+2018-07-18,2018-07-18 08:51:25,Viasat History CEE,VW02730,keep,0,7.21,21.42,28.63,Keep 'VW02730' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 21.4/100.
+2018-07-18,2018-07-18 08:51:55,Viasat History CEE,VW02717,move_to_early_prime,30,9.78,18.85,28.63,Move 'VW02717' from 08:51 to move to early prime (+30 min). Estimated uplift 9.8 points from 18.9 to 28.6.
+2018-07-18,2018-07-18 08:52:25,Viasat History CEE,IWHIS134,keep,0,5.42,23.21,28.63,Keep 'IWHIS134' as scheduled at 08:52. Current placement is acceptable. Estimated effectiveness 23.2/100.
+2018-07-18,2018-07-18 08:52:35,Viasat History CEE,VWOPIN,move_to_early_prime,30,9.17,16.47,25.64,Move 'VWOPIN' from 08:52 to move to early prime (+30 min). Estimated uplift 9.2 points from 16.5 to 25.6.
+2018-07-18,2018-07-18 09:14:54,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-18,2018-07-18 09:14:54,Viasat History CEE,VWOPOUT,keep,0,0.0,35.28,35.24,Keep 'VWOPOUT' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 35.3/100.
+2018-07-18,2018-07-18 09:14:55,Viasat History CEE,VW02684,keep,0,0.88,29.07,29.95,Keep 'VW02684' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 29.1/100.
+2018-07-18,2018-07-18 09:15:10,Viasat History CEE,VW02733,keep,0,2.59,35.64,38.23,Keep 'VW02733' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 35.6/100.
+2018-07-18,2018-07-18 09:15:40,Viasat History CEE,VW02730,keep,0,0.0,42.19,38.23,Keep 'VW02730' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 42.2/100.
+2018-07-18,2018-07-18 09:16:10,Viasat History CEE,VW02717,keep,0,0.0,38.49,38.23,Keep 'VW02717' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 38.5/100.
+2018-07-18,2018-07-18 09:16:40,Viasat History CEE,IWHIS134,keep,0,0.0,38.44,38.23,Keep 'IWHIS134' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 38.4/100.
+2018-07-18,2018-07-18 09:16:50,Viasat History CEE,VWOPIN,keep,0,0.0,36.84,35.24,Keep 'VWOPIN' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 36.8/100.
+2018-07-19,2018-07-19 06:00:00,Viasat History CEE,IWHIS132,keep,0,0.58,37.19,37.77,Keep 'IWHIS132' as scheduled at 06:00. Current placement is acceptable. Estimated effectiveness 37.2/100.
+2018-07-19,2018-07-19 06:46:09,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 06:46:09,Viasat History CEE,VWOPOUT,keep,0,0.0,37.47,34.78,Keep 'VWOPOUT' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 37.5/100.
+2018-07-19,2018-07-19 06:46:10,Viasat History CEE,VW02684,keep,0,0.0,30.03,29.49,Keep 'VW02684' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 30.0/100.
+2018-07-19,2018-07-19 06:46:25,Viasat History CEE,VW02733,keep,0,0.77,37.0,37.77,Keep 'VW02733' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 37.0/100.
+2018-07-19,2018-07-19 06:46:55,Viasat History CEE,VW02730,keep,0,0.08,37.69,37.77,Keep 'VW02730' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 37.7/100.
+2018-07-19,2018-07-19 06:47:25,Viasat History CEE,VW02717,keep,0,0.37,37.4,37.77,Keep 'VW02717' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 37.4/100.
+2018-07-19,2018-07-19 06:47:55,Viasat History CEE,IWHIS134,keep,0,3.14,34.63,37.77,Keep 'IWHIS134' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 34.6/100.
+2018-07-19,2018-07-19 06:48:05,Viasat History CEE,VWOPIN,keep,0,2.77,32.01,34.78,Keep 'VWOPIN' as scheduled at 06:48. Current placement is acceptable. Estimated effectiveness 32.0/100.
+2018-07-19,2018-07-19 07:04:33,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 07:04:33,Viasat History CEE,VWOPOUT,keep,0,2.75,30.43,33.18,Keep 'VWOPOUT' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 30.4/100.
+2018-07-19,2018-07-19 07:04:34,Viasat History CEE,VW02684,keep,0,1.06,26.83,27.89,Keep 'VW02684' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 26.8/100.
+2018-07-19,2018-07-19 07:04:49,Viasat History CEE,VW02733,keep,0,3.94,32.23,36.17,Keep 'VW02733' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 32.2/100.
+2018-07-19,2018-07-19 07:05:19,Viasat History CEE,VW02730,move_to_early_prime,30,8.79,27.38,36.17,Move 'VW02730' from 07:05 to move to early prime (+30 min). Estimated uplift 8.8 points from 27.4 to 36.2.
+2018-07-19,2018-07-19 07:05:49,Viasat History CEE,VW02717,keep,0,2.26,33.91,36.17,Keep 'VW02717' as scheduled at 07:05. Current placement is acceptable. Estimated effectiveness 33.9/100.
+2018-07-19,2018-07-19 07:06:19,Viasat History CEE,IWHIS134,keep,0,1.04,35.13,36.17,Keep 'IWHIS134' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 35.1/100.
+2018-07-19,2018-07-19 07:06:29,Viasat History CEE,VWOPIN,keep,0,2.27,30.91,33.18,Keep 'VWOPIN' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 30.9/100.
+2018-07-19,2018-07-19 07:22:21,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 07:22:21,Viasat History CEE,VWOPOUT,move_to_early_prime,30,12.12,19.46,31.58,Move 'VWOPOUT' from 07:22 to move to early prime (+30 min). Estimated uplift 12.1 points from 19.5 to 31.6.
+2018-07-19,2018-07-19 07:22:22,Viasat History CEE,VW02684,keep,0,0.14,26.15,26.29,Keep 'VW02684' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 26.1/100.
+2018-07-19,2018-07-19 07:22:37,Viasat History CEE,VW02733,keep,0,7.24,27.33,34.57,Keep 'VW02733' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 27.3/100.
+2018-07-19,2018-07-19 07:23:07,Viasat History CEE,VW02730,keep,0,3.32,31.25,34.57,Keep 'VW02730' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 31.2/100.
+2018-07-19,2018-07-19 07:23:37,Viasat History CEE,VW02717,keep,0,3.73,30.84,34.57,Keep 'VW02717' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 30.8/100.
+2018-07-19,2018-07-19 07:24:07,Viasat History CEE,IWHIS134,keep,0,5.62,28.95,34.57,Keep 'IWHIS134' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 28.9/100.
+2018-07-19,2018-07-19 07:24:17,Viasat History CEE,VWOPIN,keep,0,3.57,28.01,31.58,Keep 'VWOPIN' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 28.0/100.
+2018-07-19,2018-07-19 08:00:48,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 08:00:48,Viasat History CEE,VWOPOUT,keep,0,1.65,28.33,29.98,Keep 'VWOPOUT' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 28.3/100.
+2018-07-19,2018-07-19 08:00:49,Viasat History CEE,VW02684,keep,0,7.04,17.65,24.69,Keep 'VW02684' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 17.6/100.
+2018-07-19,2018-07-19 08:01:04,Viasat History CEE,VW02733,move_to_early_prime,30,10.87,22.1,32.97,Move 'VW02733' from 08:01 to move to early prime (+30 min). Estimated uplift 10.9 points from 22.1 to 33.0.
+2018-07-19,2018-07-19 08:01:34,Viasat History CEE,VW02730,keep,0,6.55,26.42,32.97,Keep 'VW02730' as scheduled at 08:01. Current placement is acceptable. Estimated effectiveness 26.4/100.
+2018-07-19,2018-07-19 08:02:04,Viasat History CEE,VW02717,keep,0,5.52,27.45,32.97,Keep 'VW02717' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 27.4/100.
+2018-07-19,2018-07-19 08:02:34,Viasat History CEE,IWHIS134,keep,0,5.14,27.83,32.97,Keep 'IWHIS134' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 27.8/100.
+2018-07-19,2018-07-19 08:02:44,Viasat History CEE,VWOPIN,keep,0,6.33,23.65,29.98,Keep 'VWOPIN' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 23.6/100.
+2018-07-19,2018-07-19 08:18:53,Viasat History CEE,VWOPOUT,keep,0,6.64,21.74,28.38,Keep 'VWOPOUT' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness 21.7/100.
+2018-07-19,2018-07-19 08:18:53,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 08:18:54,Viasat History CEE,VW02684,move_to_early_prime,30,12.13,10.96,23.09,Move 'VW02684' from 08:18 to move to early prime (+30 min). Estimated uplift 12.1 points from 11.0 to 23.1.
+2018-07-19,2018-07-19 08:19:09,Viasat History CEE,VW02733,keep,0,5.85,25.52,31.37,Keep 'VW02733' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 25.5/100.
+2018-07-19,2018-07-19 08:19:39,Viasat History CEE,VW02730,keep,0,2.46,28.91,31.37,Keep 'VW02730' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 28.9/100.
+2018-07-19,2018-07-19 08:20:09,Viasat History CEE,VW02717,keep,0,2.98,28.39,31.37,Keep 'VW02717' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 28.4/100.
+2018-07-19,2018-07-19 08:20:39,Viasat History CEE,IWHIS134,keep,0,2.72,28.65,31.37,Keep 'IWHIS134' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 28.6/100.
+2018-07-19,2018-07-19 08:20:49,Viasat History CEE,VWOPIN,keep,0,6.62,21.76,28.38,Keep 'VWOPIN' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 21.8/100.
+2018-07-19,2018-07-19 08:36:56,Viasat History CEE,VWOPOUT,keep,0,6.26,20.52,26.78,Keep 'VWOPOUT' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 20.5/100.
+2018-07-19,2018-07-19 08:36:56,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 08:36:57,Viasat History CEE,VW02684,move_to_early_prime,30,12.14,9.35,21.49,Move 'VW02684' from 08:36 to move to early prime (+30 min). Estimated uplift 12.1 points from 9.3 to 21.5.
+2018-07-19,2018-07-19 08:37:12,Viasat History CEE,VW02733,keep,0,7.9,21.87,29.77,Keep 'VW02733' as scheduled at 08:37. Current placement is acceptable. Estimated effectiveness 21.9/100.
+2018-07-19,2018-07-19 08:37:42,Viasat History CEE,VW02730,move_to_early_prime,30,10.71,19.06,29.77,Move 'VW02730' from 08:37 to move to early prime (+30 min). Estimated uplift 10.7 points from 19.1 to 29.8.
+2018-07-19,2018-07-19 08:38:12,Viasat History CEE,VW02717,move_to_early_prime,30,10.45,19.32,29.77,Move 'VW02717' from 08:38 to move to early prime (+30 min). Estimated uplift 10.4 points from 19.3 to 29.8.
+2018-07-19,2018-07-19 08:38:42,Viasat History CEE,IWHIS134,keep,0,4.33,25.44,29.77,Keep 'IWHIS134' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 25.4/100.
+2018-07-19,2018-07-19 08:38:52,Viasat History CEE,VWOPIN,keep,0,6.61,20.17,26.78,Keep 'VWOPIN' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 20.2/100.
+2018-07-19,2018-07-19 08:50:39,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 08:50:39,Viasat History CEE,VWOPOUT,keep,0,0.0,39.12,36.38,Keep 'VWOPOUT' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 39.1/100.
+2018-07-19,2018-07-19 08:50:40,Viasat History CEE,VW02684,keep,0,0.0,32.85,31.09,Keep 'VW02684' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 32.9/100.
+2018-07-19,2018-07-19 08:50:55,Viasat History CEE,VW02733,keep,0,0.0,41.11,39.37,Keep 'VW02733' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 41.1/100.
+2018-07-19,2018-07-19 08:51:25,Viasat History CEE,VW02730,keep,0,0.0,42.21,39.37,Keep 'VW02730' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 42.2/100.
+2018-07-19,2018-07-19 08:51:55,Viasat History CEE,VW02717,keep,0,0.0,43.23,39.37,Keep 'VW02717' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 43.2/100.
+2018-07-19,2018-07-19 08:52:25,Viasat History CEE,IWHIS134,keep,0,2.14,37.23,39.37,Keep 'IWHIS134' as scheduled at 08:52. Current placement is acceptable. Estimated effectiveness 37.2/100.
+2018-07-19,2018-07-19 08:52:35,Viasat History CEE,VWOPIN,keep,0,3.2,33.18,36.38,Keep 'VWOPIN' as scheduled at 08:52. Current placement is acceptable. Estimated effectiveness 33.2/100.
+2018-07-19,2018-07-19 09:14:54,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-19,2018-07-19 09:14:54,Viasat History CEE,VWOPOUT,keep,0,2.68,32.1,34.78,Keep 'VWOPOUT' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 32.1/100.
+2018-07-19,2018-07-19 09:14:55,Viasat History CEE,VW02684,keep,0,0.0,30.19,29.49,Keep 'VW02684' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 30.2/100.
+2018-07-19,2018-07-19 09:15:10,Viasat History CEE,VW02733,keep,0,2.27,35.5,37.77,Keep 'VW02733' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 35.5/100.
+2018-07-19,2018-07-19 09:15:40,Viasat History CEE,VW02730,keep,0,0.0,41.22,37.77,Keep 'VW02730' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 41.2/100.
+2018-07-19,2018-07-19 09:16:10,Viasat History CEE,VW02717,keep,0,0.0,40.34,37.77,Keep 'VW02717' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 40.3/100.
+2018-07-19,2018-07-19 09:16:40,Viasat History CEE,IWHIS134,keep,0,0.0,38.73,37.77,Keep 'IWHIS134' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 38.7/100.
+2018-07-19,2018-07-19 09:16:50,Viasat History CEE,VWOPIN,keep,0,6.08,28.7,34.78,Keep 'VWOPIN' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 28.7/100.
+2018-07-23,2018-07-23 06:00:00,Viasat History CEE,IWHIS132,keep,0,0.0,35.59,34.32,Keep 'IWHIS132' as scheduled at 06:00. Current placement is acceptable. Estimated effectiveness 35.6/100.
+2018-07-23,2018-07-23 06:46:09,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 06:46:09,Viasat History CEE,VWOPOUT,keep,0,0.26,31.06,31.32,Keep 'VWOPOUT' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 31.1/100.
+2018-07-23,2018-07-23 06:46:10,Viasat History CEE,VW02684,keep,0,0.0,29.42,26.04,Keep 'VW02684' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 29.4/100.
+2018-07-23,2018-07-23 06:46:25,Viasat History CEE,VW02733,keep,0,5.12,29.2,34.32,Keep 'VW02733' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 29.2/100.
+2018-07-23,2018-07-23 06:46:55,Viasat History CEE,VW02730,keep,0,0.28,34.04,34.32,Keep 'VW02730' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 34.0/100.
+2018-07-23,2018-07-23 06:47:25,Viasat History CEE,VW02717,keep,0,2.57,31.75,34.32,Keep 'VW02717' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 31.8/100.
+2018-07-23,2018-07-23 06:47:55,Viasat History CEE,IWHIS134,keep,0,4.34,29.98,34.32,Keep 'IWHIS134' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 30.0/100.
+2018-07-23,2018-07-23 06:48:05,Viasat History CEE,VWOPIN,keep,0,2.21,29.11,31.32,Keep 'VWOPIN' as scheduled at 06:48. Current placement is acceptable. Estimated effectiveness 29.1/100.
+2018-07-23,2018-07-23 07:04:33,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 07:04:33,Viasat History CEE,VWOPOUT,keep,0,2.77,26.95,29.72,Keep 'VWOPOUT' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 26.9/100.
+2018-07-23,2018-07-23 07:04:34,Viasat History CEE,VW02684,keep,0,1.87,22.57,24.44,Keep 'VW02684' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 22.6/100.
+2018-07-23,2018-07-23 07:04:49,Viasat History CEE,VW02733,move_to_early_prime,30,9.76,22.96,32.72,Move 'VW02733' from 07:04 to move to early prime (+30 min). Estimated uplift 9.8 points from 23.0 to 32.7.
+2018-07-23,2018-07-23 07:05:19,Viasat History CEE,VW02730,keep,0,1.03,31.69,32.72,Keep 'VW02730' as scheduled at 07:05. Current placement is acceptable. Estimated effectiveness 31.7/100.
+2018-07-23,2018-07-23 07:05:49,Viasat History CEE,VW02717,move_to_early_prime,30,9.79,22.93,32.72,Move 'VW02717' from 07:05 to move to early prime (+30 min). Estimated uplift 9.8 points from 22.9 to 32.7.
+2018-07-23,2018-07-23 07:06:19,Viasat History CEE,IWHIS134,move_to_early_prime,30,8.3,24.42,32.72,Move 'IWHIS134' from 07:06 to move to early prime (+30 min). Estimated uplift 8.3 points from 24.4 to 32.7.
+2018-07-23,2018-07-23 07:06:29,Viasat History CEE,VWOPIN,keep,0,7.5,22.22,29.72,Keep 'VWOPIN' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 22.2/100.
+2018-07-23,2018-07-23 07:22:21,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 07:22:21,Viasat History CEE,VWOPOUT,keep,0,5.85,22.27,28.12,Keep 'VWOPOUT' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 22.3/100.
+2018-07-23,2018-07-23 07:22:22,Viasat History CEE,VW02684,keep,0,5.42,17.42,22.84,Keep 'VW02684' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 17.4/100.
+2018-07-23,2018-07-23 07:22:37,Viasat History CEE,VW02733,keep,0,4.82,26.3,31.12,Keep 'VW02733' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 26.3/100.
+2018-07-23,2018-07-23 07:23:07,Viasat History CEE,VW02730,keep,0,7.6,23.52,31.12,Keep 'VW02730' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 23.5/100.
+2018-07-23,2018-07-23 07:23:37,Viasat History CEE,VW02717,keep,0,6.8,24.32,31.12,Keep 'VW02717' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 24.3/100.
+2018-07-23,2018-07-23 07:24:07,Viasat History CEE,IWHIS134,move_to_early_prime,30,8.14,22.98,31.12,Move 'IWHIS134' from 07:24 to move to early prime (+30 min). Estimated uplift 8.1 points from 23.0 to 31.1.
+2018-07-23,2018-07-23 07:24:17,Viasat History CEE,VWOPIN,move_to_early_prime,30,25.36,0.0,25.36,Move 'VWOPIN' from 07:24 to move to early prime (+30 min). Estimated uplift 25.4 points from 0.0 to 25.4.
+2018-07-23,2018-07-23 08:00:48,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 08:00:48,Viasat History CEE,VWOPOUT,keep,0,4.9,21.62,26.52,Keep 'VWOPOUT' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 21.6/100.
+2018-07-23,2018-07-23 08:00:49,Viasat History CEE,VW02684,keep,0,3.28,17.96,21.24,Keep 'VW02684' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 18.0/100.
+2018-07-23,2018-07-23 08:01:04,Viasat History CEE,VW02733,keep,0,4.97,24.55,29.52,Keep 'VW02733' as scheduled at 08:01. Current placement is acceptable. Estimated effectiveness 24.6/100.
+2018-07-23,2018-07-23 08:01:34,Viasat History CEE,VW02730,move_to_early_prime,30,9.13,20.39,29.52,Move 'VW02730' from 08:01 to move to early prime (+30 min). Estimated uplift 9.1 points from 20.4 to 29.5.
+2018-07-23,2018-07-23 08:02:04,Viasat History CEE,VW02717,move_to_early_prime,30,8.73,20.79,29.52,Move 'VW02717' from 08:02 to move to early prime (+30 min). Estimated uplift 8.7 points from 20.8 to 29.5.
+2018-07-23,2018-07-23 08:02:34,Viasat History CEE,IWHIS134,keep,0,5.64,23.88,29.52,Keep 'IWHIS134' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 23.9/100.
+2018-07-23,2018-07-23 08:02:44,Viasat History CEE,VWOPIN,keep,0,6.33,20.19,26.52,Keep 'VWOPIN' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 20.2/100.
+2018-07-23,2018-07-23 08:18:53,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 08:18:53,Viasat History CEE,VWOPOUT,move_to_early_prime,30,9.41,15.51,24.92,Move 'VWOPOUT' from 08:18 to move to early prime (+30 min). Estimated uplift 9.4 points from 15.5 to 24.9.
+2018-07-23,2018-07-23 08:18:54,Viasat History CEE,VW02684,move_to_early_prime,30,10.24,9.4,19.64,Move 'VW02684' from 08:18 to move to early prime (+30 min). Estimated uplift 10.2 points from 9.4 to 19.6.
+2018-07-23,2018-07-23 08:19:09,Viasat History CEE,VW02733,move_to_early_prime,30,14.82,13.1,27.92,Move 'VW02733' from 08:19 to move to early prime (+30 min). Estimated uplift 14.8 points from 13.1 to 27.9.
+2018-07-23,2018-07-23 08:19:39,Viasat History CEE,VW02730,move_to_early_prime,30,25.16,0.0,25.16,Move 'VW02730' from 08:19 to move to early prime (+30 min). Estimated uplift 25.2 points from 0.0 to 25.2.
+2018-07-23,2018-07-23 08:20:09,Viasat History CEE,VW02717,move_to_early_prime,30,9.67,18.25,27.92,Move 'VW02717' from 08:20 to move to early prime (+30 min). Estimated uplift 9.7 points from 18.2 to 27.9.
+2018-07-23,2018-07-23 08:20:39,Viasat History CEE,IWHIS134,keep,0,6.18,21.74,27.92,Keep 'IWHIS134' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 21.7/100.
+2018-07-23,2018-07-23 08:20:49,Viasat History CEE,VWOPIN,keep,0,4.9,20.02,24.92,Keep 'VWOPIN' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 20.0/100.
+2018-07-23,2018-07-23 08:36:56,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 08:36:56,Viasat History CEE,VWOPOUT,keep,0,0.0,36.92,34.52,Keep 'VWOPOUT' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 36.9/100.
+2018-07-23,2018-07-23 08:36:57,Viasat History CEE,VW02684,keep,0,0.0,29.4,29.24,Keep 'VW02684' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 29.4/100.
+2018-07-23,2018-07-23 08:37:12,Viasat History CEE,VW02733,keep,0,5.91,31.61,37.52,Keep 'VW02733' as scheduled at 08:37. Current placement is acceptable. Estimated effectiveness 31.6/100.
+2018-07-23,2018-07-23 08:37:42,Viasat History CEE,VW02730,keep,0,0.37,37.15,37.52,Keep 'VW02730' as scheduled at 08:37. Current placement is acceptable. Estimated effectiveness 37.1/100.
+2018-07-23,2018-07-23 08:38:12,Viasat History CEE,VW02717,keep,0,0.0,40.66,37.52,Keep 'VW02717' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 40.7/100.
+2018-07-23,2018-07-23 08:38:42,Viasat History CEE,IWHIS134,keep,0,1.13,36.39,37.52,Keep 'IWHIS134' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 36.4/100.
+2018-07-23,2018-07-23 08:38:52,Viasat History CEE,VWOPIN,keep,0,0.0,37.69,34.52,Keep 'VWOPIN' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 37.7/100.
+2018-07-23,2018-07-23 08:50:39,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 08:50:39,Viasat History CEE,VWOPOUT,keep,0,0.41,32.51,32.92,Keep 'VWOPOUT' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 32.5/100.
+2018-07-23,2018-07-23 08:50:40,Viasat History CEE,VW02684,keep,0,0.0,30.89,27.64,Keep 'VW02684' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 30.9/100.
+2018-07-23,2018-07-23 08:50:55,Viasat History CEE,VW02733,keep,0,0.0,39.9,35.92,Keep 'VW02733' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 39.9/100.
+2018-07-23,2018-07-23 08:51:25,Viasat History CEE,VW02730,keep,0,4.12,31.8,35.92,Keep 'VW02730' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 31.8/100.
+2018-07-23,2018-07-23 08:51:55,Viasat History CEE,VW02717,keep,0,0.73,35.19,35.92,Keep 'VW02717' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 35.2/100.
+2018-07-23,2018-07-23 08:52:25,Viasat History CEE,IWHIS134,keep,0,1.81,34.11,35.92,Keep 'IWHIS134' as scheduled at 08:52. Current placement is acceptable. Estimated effectiveness 34.1/100.
+2018-07-23,2018-07-23 08:52:35,Viasat History CEE,VWOPIN,keep,0,1.49,31.43,32.92,Keep 'VWOPIN' as scheduled at 08:52. Current placement is acceptable. Estimated effectiveness 31.4/100.
+2018-07-23,2018-07-23 09:14:54,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-23,2018-07-23 09:14:54,Viasat History CEE,VWOPOUT,keep,0,4.3,27.02,31.32,Keep 'VWOPOUT' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 27.0/100.
+2018-07-23,2018-07-23 09:14:55,Viasat History CEE,VW02684,keep,0,4.09,21.95,26.04,Keep 'VW02684' as scheduled at 09:14. Current placement is acceptable. Estimated effectiveness 21.9/100.
+2018-07-23,2018-07-23 09:15:10,Viasat History CEE,VW02733,keep,0,3.03,31.29,34.32,Keep 'VW02733' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 31.3/100.
+2018-07-23,2018-07-23 09:15:40,Viasat History CEE,VW02730,keep,0,2.04,32.28,34.32,Keep 'VW02730' as scheduled at 09:15. Current placement is acceptable. Estimated effectiveness 32.3/100.
+2018-07-23,2018-07-23 09:16:10,Viasat History CEE,VW02717,keep,0,1.23,33.09,34.32,Keep 'VW02717' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 33.1/100.
+2018-07-23,2018-07-23 09:16:40,Viasat History CEE,IWHIS134,keep,0,2.48,31.84,34.32,Keep 'IWHIS134' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 31.8/100.
+2018-07-23,2018-07-23 09:16:50,Viasat History CEE,VWOPIN,keep,0,0.0,32.86,31.32,Keep 'VWOPIN' as scheduled at 09:16. Current placement is acceptable. Estimated effectiveness 32.9/100.
+2018-07-24,2018-07-24 06:00:00,Viasat History CEE,IWHIS132,keep,0,3.84,27.9,31.74,Keep 'IWHIS132' as scheduled at 06:00. Current placement is acceptable. Estimated effectiveness 27.9/100.
+2018-07-24,2018-07-24 06:46:09,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 06:46:09,Viasat History CEE,VWOPOUT,keep,0,7.16,21.58,28.74,Keep 'VWOPOUT' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 21.6/100.
+2018-07-24,2018-07-24 06:46:10,Viasat History CEE,VW02684,keep,0,4.0,19.46,23.46,Keep 'VW02684' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 19.5/100.
+2018-07-24,2018-07-24 06:46:25,Viasat History CEE,VW02733,keep,0,6.38,25.36,31.74,Keep 'VW02733' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 25.4/100.
+2018-07-24,2018-07-24 06:46:55,Viasat History CEE,VW02730,keep,0,4.92,26.82,31.74,Keep 'VW02730' as scheduled at 06:46. Current placement is acceptable. Estimated effectiveness 26.8/100.
+2018-07-24,2018-07-24 06:47:25,Viasat History CEE,VW02717,keep,0,4.41,27.33,31.74,Keep 'VW02717' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 27.3/100.
+2018-07-24,2018-07-24 06:47:55,Viasat History CEE,IWHIS134,keep,0,2.29,29.45,31.74,Keep 'IWHIS134' as scheduled at 06:47. Current placement is acceptable. Estimated effectiveness 29.4/100.
+2018-07-24,2018-07-24 06:48:05,Viasat History CEE,VWOPIN,keep,0,7.78,20.96,28.74,Keep 'VWOPIN' as scheduled at 06:48. Current placement is acceptable. Estimated effectiveness 21.0/100.
+2018-07-24,2018-07-24 07:04:33,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 07:04:33,Viasat History CEE,VWOPOUT,keep,0,4.34,22.8,27.14,Keep 'VWOPOUT' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 22.8/100.
+2018-07-24,2018-07-24 07:04:34,Viasat History CEE,VW02684,move_to_early_prime,30,9.89,11.97,21.86,Move 'VW02684' from 07:04 to move to early prime (+30 min). Estimated uplift 9.9 points from 12.0 to 21.9.
+2018-07-24,2018-07-24 07:04:49,Viasat History CEE,VW02733,keep,0,6.45,23.69,30.14,Keep 'VW02733' as scheduled at 07:04. Current placement is acceptable. Estimated effectiveness 23.7/100.
+2018-07-24,2018-07-24 07:05:19,Viasat History CEE,VW02730,move_to_early_prime,30,8.16,21.98,30.14,Move 'VW02730' from 07:05 to move to early prime (+30 min). Estimated uplift 8.2 points from 22.0 to 30.1.
+2018-07-24,2018-07-24 07:05:49,Viasat History CEE,VW02717,keep,0,4.34,25.8,30.14,Keep 'VW02717' as scheduled at 07:05. Current placement is acceptable. Estimated effectiveness 25.8/100.
+2018-07-24,2018-07-24 07:06:19,Viasat History CEE,IWHIS134,keep,0,6.01,24.13,30.14,Keep 'IWHIS134' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 24.1/100.
+2018-07-24,2018-07-24 07:06:29,Viasat History CEE,VWOPIN,keep,0,2.48,24.66,27.14,Keep 'VWOPIN' as scheduled at 07:06. Current placement is acceptable. Estimated effectiveness 24.7/100.
+2018-07-24,2018-07-24 07:22:21,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 07:22:21,Viasat History CEE,VWOPOUT,keep,0,4.47,21.07,25.54,Keep 'VWOPOUT' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 21.1/100.
+2018-07-24,2018-07-24 07:22:22,Viasat History CEE,VW02684,keep,0,7.29,12.97,20.26,Keep 'VW02684' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 13.0/100.
+2018-07-24,2018-07-24 07:22:37,Viasat History CEE,VW02733,keep,0,7.08,21.46,28.54,Keep 'VW02733' as scheduled at 07:22. Current placement is acceptable. Estimated effectiveness 21.5/100.
+2018-07-24,2018-07-24 07:23:07,Viasat History CEE,VW02730,keep,0,5.43,23.11,28.54,Keep 'VW02730' as scheduled at 07:23. Current placement is acceptable. Estimated effectiveness 23.1/100.
+2018-07-24,2018-07-24 07:23:37,Viasat History CEE,VW02717,move_to_early_prime,30,9.63,18.91,28.54,Move 'VW02717' from 07:23 to move to early prime (+30 min). Estimated uplift 9.6 points from 18.9 to 28.5.
+2018-07-24,2018-07-24 07:24:07,Viasat History CEE,IWHIS134,keep,0,7.4,21.14,28.54,Keep 'IWHIS134' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 21.1/100.
+2018-07-24,2018-07-24 07:24:17,Viasat History CEE,VWOPIN,keep,0,3.81,21.73,25.54,Keep 'VWOPIN' as scheduled at 07:24. Current placement is acceptable. Estimated effectiveness 21.7/100.
+2018-07-24,2018-07-24 08:00:48,Viasat History CEE,VWOPOUT,keep,0,4.55,19.39,23.94,Keep 'VWOPOUT' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 19.4/100.
+2018-07-24,2018-07-24 08:00:48,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 08:00:49,Viasat History CEE,VW02684,keep,0,6.27,12.39,18.66,Keep 'VW02684' as scheduled at 08:00. Current placement is acceptable. Estimated effectiveness 12.4/100.
+2018-07-24,2018-07-24 08:01:04,Viasat History CEE,VW02733,move_to_early_prime,30,10.68,16.26,26.94,Move 'VW02733' from 08:01 to move to early prime (+30 min). Estimated uplift 10.7 points from 16.3 to 26.9.
+2018-07-24,2018-07-24 08:01:34,Viasat History CEE,VW02730,move_to_early_prime,30,10.28,16.66,26.94,Move 'VW02730' from 08:01 to move to early prime (+30 min). Estimated uplift 10.3 points from 16.7 to 26.9.
+2018-07-24,2018-07-24 08:02:04,Viasat History CEE,VW02717,keep,0,7.76,19.18,26.94,Keep 'VW02717' as scheduled at 08:02. Current placement is acceptable. Estimated effectiveness 19.2/100.
+2018-07-24,2018-07-24 08:02:34,Viasat History CEE,IWHIS134,move_to_early_prime,30,10.64,16.3,26.94,Move 'IWHIS134' from 08:02 to move to early prime (+30 min). Estimated uplift 10.6 points from 16.3 to 26.9.
+2018-07-24,2018-07-24 08:02:44,Viasat History CEE,VWOPIN,move_to_early_prime,30,9.53,14.41,23.94,Move 'VWOPIN' from 08:02 to move to early prime (+30 min). Estimated uplift 9.5 points from 14.4 to 23.9.
+2018-07-24,2018-07-24 08:18:53,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 08:18:53,Viasat History CEE,VWOPOUT,keep,0,0.71,32.83,33.54,Keep 'VWOPOUT' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness 32.8/100.
+2018-07-24,2018-07-24 08:18:54,Viasat History CEE,VW02684,keep,0,0.0,32.34,28.26,Keep 'VW02684' as scheduled at 08:18. Current placement is acceptable. Estimated effectiveness 32.3/100.
+2018-07-24,2018-07-24 08:19:09,Viasat History CEE,VW02733,keep,0,0.34,36.2,36.54,Keep 'VW02733' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 36.2/100.
+2018-07-24,2018-07-24 08:19:39,Viasat History CEE,VW02730,keep,0,0.0,41.28,36.54,Keep 'VW02730' as scheduled at 08:19. Current placement is acceptable. Estimated effectiveness 41.3/100.
+2018-07-24,2018-07-24 08:20:09,Viasat History CEE,VW02717,keep,0,0.0,38.61,36.54,Keep 'VW02717' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 38.6/100.
+2018-07-24,2018-07-24 08:20:39,Viasat History CEE,IWHIS134,keep,0,0.0,39.37,36.54,Keep 'IWHIS134' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 39.4/100.
+2018-07-24,2018-07-24 08:20:49,Viasat History CEE,VWOPIN,keep,0,0.0,33.67,33.54,Keep 'VWOPIN' as scheduled at 08:20. Current placement is acceptable. Estimated effectiveness 33.7/100.
+2018-07-24,2018-07-24 08:36:56,Viasat History CEE,VWOPOUT,keep,0,0.0,32.25,31.94,Keep 'VWOPOUT' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 32.2/100.
+2018-07-24,2018-07-24 08:36:56,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 08:36:57,Viasat History CEE,VW02684,keep,0,6.52,20.14,26.66,Keep 'VW02684' as scheduled at 08:36. Current placement is acceptable. Estimated effectiveness 20.1/100.
+2018-07-24,2018-07-24 08:37:12,Viasat History CEE,VW02733,keep,0,0.0,37.59,34.94,Keep 'VW02733' as scheduled at 08:37. Current placement is acceptable. Estimated effectiveness 37.6/100.
+2018-07-24,2018-07-24 08:37:42,Viasat History CEE,VW02730,keep,0,3.1,31.84,34.94,Keep 'VW02730' as scheduled at 08:37. Current placement is acceptable. Estimated effectiveness 31.8/100.
+2018-07-24,2018-07-24 08:38:12,Viasat History CEE,VW02717,keep,0,7.92,27.02,34.94,Keep 'VW02717' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 27.0/100.
+2018-07-24,2018-07-24 08:38:42,Viasat History CEE,IWHIS134,keep,0,0.0,35.47,34.94,Keep 'IWHIS134' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 35.5/100.
+2018-07-24,2018-07-24 08:38:52,Viasat History CEE,VWOPIN,keep,0,0.42,31.52,31.94,Keep 'VWOPIN' as scheduled at 08:38. Current placement is acceptable. Estimated effectiveness 31.5/100.
+2018-07-24,2018-07-24 08:50:39,Viasat History CEE,VWOPOUT,keep,0,5.6,24.74,30.34,Keep 'VWOPOUT' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 24.7/100.
+2018-07-24,2018-07-24 08:50:39,Viasat History CEE,nan,keep,0,,,,Keep 'nan' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness nan/100.
+2018-07-24,2018-07-24 08:50:40,Viasat History CEE,VW02684,keep,0,3.11,21.95,25.06,Keep 'VW02684' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 21.9/100.
+2018-07-24,2018-07-24 08:50:55,Viasat History CEE,VW02733,keep,0,3.92,29.42,33.34,Keep 'VW02733' as scheduled at 08:50. Current placement is acceptable. Estimated effectiveness 29.4/100.
+2018-07-24,2018-07-24 08:51:25,Viasat History CEE,VW02730,keep,0,1.11,32.23,33.34,Keep 'VW02730' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 32.2/100.
+2018-07-24,2018-07-24 08:51:55,Viasat History CEE,VW02717,keep,0,1.81,31.53,33.34,Keep 'VW02717' as scheduled at 08:51. Current placement is acceptable. Estimated effectiveness 31.5/100.
