@@ -41,6 +41,8 @@ def mock_schema():
 @pytest.fixture(autouse=True)
 def set_state(mock_cls_model, mock_reg_model, mock_schema):
     """Inject mock models into app state before every test."""
+    mock_cls_model.reset_mock()
+    mock_reg_model.reset_mock()
     from main import _state
     _state["cls_model"] = mock_cls_model
     _state["reg_model"] = mock_reg_model
