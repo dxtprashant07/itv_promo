@@ -8,11 +8,16 @@ Run:
     streamlit run streamlit_app.py
 """
 
+import io
+import json
 import os
-import time
 import random
+import time
 from datetime import datetime, date
+from pathlib import Path
 
+import joblib
+import numpy as np
 import pandas as pd
 import requests
 import streamlit as st
@@ -390,6 +395,58 @@ def fetch_predictions(schedule: list[dict]) -> list[dict]:
         return []
 
 
+@st.cache_resource(show_spinner=False)
+def _load_local_models():
+    model_dir = Path("model")
+    cls_path = model_dir / "promo_move_classifier.pkl"
+    if not cls_path.exists():
+        return None, None, None
+    cls = joblib.load(cls_path)
+    reg = joblib.load(model_dir / "promo_uplift_regressor.pkl")
+    schema_path = model_dir / "inference_schema.json"
+    schema = json.loads(schema_path.read_text()) if schema_path.exists() else None
+    return cls, reg, schema
+
+
+def _prepare_df(df: pd.DataFrame, schema) -> pd.DataFrame:
+    if schema is None:
+        return df
+    prepared = df.reindex(columns=schema["feature_cols"])
+    for col in schema.get("categorical_cols", []):
+        cats = schema.get("category_values", {}).get(col) or []
+        if cats:
+            prepared[col] = pd.Categorical(prepared[col].astype(str), categories=cats)
+        else:
+            prepared[col] = prepared[col].astype("category")
+    return prepared
+
+
+def local_predictions(rows: list[dict]) -> list[dict]:
+    """Run real ML inference locally — used when the FastAPI backend is offline."""
+    cls_model, reg_model, schema = _load_local_models()
+    if cls_model is None:
+        return mock_predictions(rows)
+
+    df = pd.DataFrame([{k: row.get(k) for k in _FEATURE_KEYS} for row in rows])
+    X = _prepare_df(df, schema)
+
+    probas = cls_model.predict_proba(X)[:, 1]
+    moves = (probas >= 0.5).astype(int)
+    uplifts = np.zeros(len(rows))
+    move_idx = np.where(moves == 1)[0]
+    if len(move_idx):
+        uplifts[move_idx] = reg_model.predict(X.iloc[move_idx])
+
+    return [
+        {
+            "should_move": int(m),
+            "move_probability": round(float(p), 4),
+            "predicted_uplift": round(float(u), 4),
+        }
+        for m, p, u in zip(moves, probas, uplifts)
+    ]
+
+
 def mock_predictions(schedule: list[dict]) -> list[dict]:
     """Deterministic fallback predictions when API is unreachable."""
     random.seed(42)
@@ -476,9 +533,9 @@ def build_table_html(rows: list[dict]) -> str:
 @st.cache_data(ttl=REFRESH_INTERVAL_SEC, show_spinner=False)
 def load_data(refresh_key: int):
     api_live = check_api_health()
-    preds = fetch_predictions(MOCK_SCHEDULE) if api_live else mock_predictions(MOCK_SCHEDULE)
+    preds = fetch_predictions(MOCK_SCHEDULE) if api_live else local_predictions(MOCK_SCHEDULE)
     if not preds:
-        preds = mock_predictions(MOCK_SCHEDULE)
+        preds = local_predictions(MOCK_SCHEDULE)
 
     enriched = []
     for row, pred in zip(MOCK_SCHEDULE, preds):
@@ -749,79 +806,73 @@ with st.form("single_predict_form", clear_on_submit=False):
     )
 
 if submitted:
-    if not api_live:
-        st.error("API is offline. Start it with:  uvicorn main:app --reload")
-    else:
-        payload = {
-            "channel":               "Viasat History CEE",
-            "promo_title":           f_title,
-            "content_type":          f_content_type,
-            "genre_guess":           f_genre,
-            "promo_length_seconds":  f_promo_len,
-            "hour":                  f_hour,
-            "day_of_week":           f_day_of_week,
-            "is_weekend":            f_is_weekend_val,
-            "promo_position_type":   f_pos_type,
-            "promo_in_break":        f_in_break_val,
-            "break_event_position":  int(f_break_ev),
-            "break_total_events":    int(f_break_tot),
-            "break_position_pct":    f_break_pos,
-            "weather_station":       "hurn",
-            "weather_rain_mm":       f_rain,
-            "weather_sun_hours":     f_sun,
-            "weather_indoor_viewing_index": f_indoor,
-            "promo_fatigue_index":   f_fatigue,
-            "attention_context_score": f_attention,
-        }
-
-        try:
+    payload = {
+        "channel":               "Viasat History CEE",
+        "promo_title":           f_title,
+        "content_type":          f_content_type,
+        "genre_guess":           f_genre,
+        "promo_length_seconds":  f_promo_len,
+        "hour":                  f_hour,
+        "day_of_week":           f_day_of_week,
+        "is_weekend":            f_is_weekend_val,
+        "promo_position_type":   f_pos_type,
+        "promo_in_break":        f_in_break_val,
+        "break_event_position":  int(f_break_ev),
+        "break_total_events":    int(f_break_tot),
+        "break_position_pct":    f_break_pos,
+        "weather_station":       "hurn",
+        "weather_rain_mm":       f_rain,
+        "weather_sun_hours":     f_sun,
+        "weather_indoor_viewing_index": f_indoor,
+        "promo_fatigue_index":   f_fatigue,
+        "attention_context_score": f_attention,
+    }
+    try:
+        if api_live:
             resp = requests.post(f"{API_URL}/predict", json=payload, timeout=10)
             resp.raise_for_status()
             result = resp.json()
+        else:
+            result = local_predictions([payload])[0]
 
-            sm      = result["should_move"]
-            prob    = result["move_probability"]
-            uplift  = result["predicted_uplift"]
+        sm     = result["should_move"]
+        prob   = result["move_probability"]
+        uplift = result["predicted_uplift"]
 
-            # Result banner
-            if sm == 1 and prob >= 0.70:
-                banner_bg, banner_border, banner_text = "#ffebeb", "#cc2200", "#cc2200"
-                flag_label = "Review — swap"
-                icon = "🔴"
-            elif sm == 1:
-                banner_bg, banner_border, banner_text = "#fff5e0", "#cc7700", "#cc7700"
-                flag_label = "Review — move"
-                icon = "🟡"
-            else:
-                banner_bg, banner_border, banner_text = "#e8faf0", "#117733", "#117733"
-                flag_label = "On track — keep"
-                icon = "🟢"
+        if sm == 1 and prob >= 0.70:
+            banner_bg, banner_border, banner_text = "#ffebeb", "#cc2200", "#cc2200"
+            flag_label, icon = "Review — swap", "🔴"
+        elif sm == 1:
+            banner_bg, banner_border, banner_text = "#fff5e0", "#cc7700", "#cc7700"
+            flag_label, icon = "Review — move", "🟡"
+        else:
+            banner_bg, banner_border, banner_text = "#e8faf0", "#117733", "#117733"
+            flag_label, icon = "On track — keep", "🟢"
 
-            st.markdown(f"""
-            <div style="background:{banner_bg};border:2px solid {banner_border};border-radius:10px;
-                 padding:20px 28px;margin:12px 0;
-                 font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-              <div style="font-size:20px;font-weight:800;color:{banner_text};margin-bottom:8px;">
-                {icon} &nbsp; {flag_label}
-              </div>
-              <div style="font-size:13px;color:#333;">
-                <b>Promo:</b> {f_title}
-                &nbsp;&nbsp;|&nbsp;&nbsp;
-                <b>Slot:</b> {f_hour:02d}:00 &nbsp; · &nbsp; Break position {f_break_pos*100:.0f}%
-              </div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(f"""
+        <div style="background:{banner_bg};border:2px solid {banner_border};border-radius:10px;
+             padding:20px 28px;margin:12px 0;
+             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+          <div style="font-size:20px;font-weight:800;color:{banner_text};margin-bottom:8px;">
+            {icon} &nbsp; {flag_label}
+          </div>
+          <div style="font-size:13px;color:#333;">
+            <b>Promo:</b> {f_title}
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <b>Slot:</b> {f_hour:02d}:00 &nbsp; · &nbsp; Break position {f_break_pos*100:.0f}%
+          </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-            r1, r2, r3 = st.columns(3)
-            r1.metric("Should Move",      "Yes" if sm else "No")
-            r2.metric("Move Probability", f"{prob*100:.1f}%")
-            r3.metric("Predicted Uplift", f"+{uplift:.4f}" if sm else "—")
+        r1, r2, r3 = st.columns(3)
+        r1.metric("Should Move",      "Yes" if sm else "No")
+        r2.metric("Move Probability", f"{prob*100:.1f}%")
+        r3.metric("Predicted Uplift", f"+{uplift:.4f}" if sm else "—")
 
-            with st.expander("Show payload sent to API"):
-                st.json(payload)
-
-        except Exception as e:
-            st.error(f"Prediction failed: {e}")
+        with st.expander("Show payload"):
+            st.json(payload)
+    except Exception as e:
+        st.error(f"Prediction failed: {e}")
 
 # ---------------------------------------------------------------------------
 # CSV Upload section
@@ -864,61 +915,55 @@ with up_col2:
     """, unsafe_allow_html=True)
 
 if uploaded_file is not None:
-    if not api_live:
-        st.error("API is offline — start `uvicorn main:app --reload` first, then upload.")
-    else:
-        with st.spinner(f"Sending {uploaded_file.name} to the model..."):
-            try:
+    with st.spinner(f"Processing {uploaded_file.name}…"):
+        try:
+            df_up = pd.read_csv(io.BytesIO(uploaded_file.getvalue()))
+            leaky = {
+                "actual_status", "actual_start_offset_seconds", "actual_duration_seconds",
+                "duration_diff_seconds", "was_missed", "observed_effectiveness_score", "best_possible_score",
+            }
+            df_up = df_up.drop(columns=[c for c in leaky if c in df_up.columns])
+
+            if api_live:
                 response = requests.post(
                     f"{API_URL}/predict/upload",
                     files={"file": (uploaded_file.name, uploaded_file.getvalue(), "text/csv")},
                     timeout=60,
                 )
-                if response.status_code == 200:
-                    result_bytes = response.content
-                    out_name = uploaded_file.name.replace(".csv", "_predictions.csv")
+                response.raise_for_status()
+                preview_df = pd.read_csv(io.BytesIO(response.content))
+                result_bytes = response.content
+            else:
+                rows = df_up.to_dict(orient="records")
+                preds = local_predictions(rows)
+                preds_df = pd.DataFrame(preds)
+                preview_df = pd.concat([df_up.reset_index(drop=True), preds_df], axis=1)
+                result_bytes = preview_df.to_csv(index=False).encode()
 
-                    # Show a preview
-                    import io
-                    preview_df = pd.read_csv(io.BytesIO(result_bytes))
-                    total   = len(preview_df)
-                    flagged = int(preview_df["should_move"].sum())
+            total   = len(preview_df)
+            flagged = int(preview_df["should_move"].sum())
+            out_name = uploaded_file.name.replace(".csv", "_predictions.csv")
 
-                    st.success(
-                        f"Done — {total:,} rows processed, "
-                        f"**{flagged}** flagged for repositioning "
-                        f"({flagged/total*100:.1f}%)"
-                    )
+            st.success(f"Done — {total:,} rows processed, **{flagged}** flagged ({flagged/total*100:.1f}%)")
+            m1, m2, m3 = st.columns(3)
+            m1.metric("Total rows",     f"{total:,}")
+            m2.metric("Should move",    f"{flagged:,}")
+            m3.metric("Avg confidence", f"{preview_df['move_probability'].mean()*100:.1f}%")
 
-                    # Summary metrics
-                    m1, m2, m3 = st.columns(3)
-                    m1.metric("Total rows",      f"{total:,}")
-                    m2.metric("Should move",     f"{flagged:,}")
-                    m3.metric("Avg confidence",  f"{preview_df['move_probability'].mean()*100:.1f}%")
+            display_cols = [c for c in
+                ["datetime", "promo_title", "hour", "should_move", "move_probability", "predicted_uplift"]
+                if c in preview_df.columns]
+            st.dataframe(preview_df[display_cols].head(20), use_container_width=True, hide_index=True)
 
-                    # Preview table
-                    display_cols = [c for c in
-                        ["datetime","promo_title","hour","should_move","move_probability","predicted_uplift"]
-                        if c in preview_df.columns]
-                    st.dataframe(
-                        preview_df[display_cols].head(20),
-                        use_container_width=True,
-                        hide_index=True,
-                    )
-
-                    # Download button
-                    st.download_button(
-                        label="Download full predictions CSV",
-                        data=result_bytes,
-                        file_name=out_name,
-                        mime="text/csv",
-                        use_container_width=True,
-                    )
-                else:
-                    err = response.json().get("detail", response.text)
-                    st.error(f"API error {response.status_code}: {err}")
-            except Exception as e:
-                st.error(f"Upload failed: {e}")
+            st.download_button(
+                label="Download full predictions CSV",
+                data=result_bytes,
+                file_name=out_name,
+                mime="text/csv",
+                use_container_width=True,
+            )
+        except Exception as e:
+            st.error(f"Upload failed: {e}")
 
 # ---------------------------------------------------------------------------
 # Auto-refresh

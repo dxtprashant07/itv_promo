@@ -6,6 +6,7 @@ ENV/
 
 # Python
 __pycache__/
+*/__pycache__/
 *.py[cod]
 *.pyo
 *.pyd
@@ -35,9 +36,12 @@ Thumbs.db
 *.log
 logs/
 
-# Data / models (large files)
+# Data files — keep model/ artifacts tracked, exclude raw/output CSVs
+*.csv
+*.parquet
 *.pkl
 *.joblib
 *.h5
 *.hdf5
-*.parquet
+!model/*.pkl
+!model/*.json
