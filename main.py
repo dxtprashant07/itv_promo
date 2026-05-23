@@ -19,8 +19,10 @@ import io
 import json
 import logging
 import os
+import threading
 import time
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -31,6 +33,8 @@ from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
+
+from config import LEAKY_COLUMNS
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -48,8 +52,14 @@ logger = logging.getLogger("ctv_promo_api")
 # ---------------------------------------------------------------------------
 
 MODEL_DIR = Path(os.getenv("MODEL_DIR", "model"))
+DATA_DIR = Path(os.getenv("DATA_DIR", "data"))
+DATA_DIR.mkdir(exist_ok=True)
+FEEDBACK_PATH = DATA_DIR / "feedback.csv"
+
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
 BATCH_LIMIT = int(os.getenv("BATCH_LIMIT", "500"))
+MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "50"))
+MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024
 
 # ---------------------------------------------------------------------------
 # App + middleware
@@ -102,12 +112,21 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 # Global state
 # ---------------------------------------------------------------------------
 
+_state_lock = threading.Lock()   # guards all writes to _state model fields
+
 _state: dict = {
     "cls_model": None,
     "reg_model": None,
     "schema": None,
     "ready": False,
     "error": None,
+    "training": {
+        "status": "idle",       # idle | running | done | error
+        "started_at": None,
+        "finished_at": None,
+        "metrics": None,
+        "error": None,
+    },
 }
 
 
@@ -130,12 +149,13 @@ def _load_models() -> None:
             MODEL_DIR,
         )
 
-    # Commit atomically so a failed reload doesn't break a running instance
-    _state["cls_model"] = cls_model
-    _state["reg_model"] = reg_model
-    _state["schema"] = schema
-    _state["ready"] = True
-    _state["error"] = None
+    # Commit atomically under lock so no request sees a half-loaded state
+    with _state_lock:
+        _state["cls_model"] = cls_model
+        _state["reg_model"] = reg_model
+        _state["schema"] = schema
+        _state["ready"] = True
+        _state["error"] = None
     logger.info("Models ready")
 
 
@@ -213,6 +233,14 @@ class PredictionResponse(BaseModel):
     should_move: int = Field(..., description="1 = recommend repositioning, 0 = keep")
     move_probability: float = Field(..., description="Classifier confidence [0, 1]")
     predicted_uplift: float = Field(..., description="Expected uplift if moved (0 when should_move=0)")
+
+
+class FeedbackRow(PromoFeatures):
+    """Labeled promo row used for incremental retraining."""
+    should_move: int = Field(..., ge=0, le=1, description="Actual label: 1=moved, 0=kept")
+    uplift_if_optimised: Optional[float] = Field(
+        default=0.0, description="Observed uplift when moved (leave 0 for keep rows)"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -377,20 +405,23 @@ async def predict_upload(file: UploadFile = File(...)):
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are accepted")
 
-    LEAKY = {
-        "actual_status", "actual_start_offset_seconds", "actual_duration_seconds",
-        "duration_diff_seconds", "was_missed", "observed_effectiveness_score",
-        "best_possible_score",
-    }
+    _LEAKY = set(LEAKY_COLUMNS)
 
     try:
         contents = await file.read()
+        if len(contents) > MAX_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=f"File too large ({len(contents)//1024//1024} MB). Limit is {MAX_UPLOAD_MB} MB.",
+            )
         df = pd.read_csv(io.BytesIO(contents))
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Could not parse CSV: {exc}")
 
     # Drop leaky columns silently
-    df = df.drop(columns=[c for c in LEAKY if c in df.columns])
+    df = df.drop(columns=[c for c in _LEAKY if c in df.columns])
 
     schema = _state["schema"]
     feature_cols = schema["feature_cols"] if schema else list(
@@ -436,3 +467,150 @@ async def predict_upload(file: UploadFile = File(...)):
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename={out_filename}"},
     )
+
+
+# ---------------------------------------------------------------------------
+# Training / retraining endpoints
+# ---------------------------------------------------------------------------
+
+def _run_training(df: pd.DataFrame, incremental: bool, n_new_trees: int) -> None:
+    """Background thread: train models and hot-reload on completion."""
+    ts = _state["training"]
+    ts["status"] = "running"
+    ts["started_at"] = datetime.now(timezone.utc).isoformat()
+    ts["finished_at"] = None
+    ts["error"] = None
+    ts["metrics"] = None
+
+    try:
+        from trainer import train_models
+        metrics = train_models(df, MODEL_DIR, incremental=incremental, n_new_trees=n_new_trees)
+        _load_models()                          # atomic hot-reload
+        ts["status"] = "done"
+        ts["metrics"] = metrics
+        ts["finished_at"] = datetime.now(timezone.utc).isoformat()
+        logger.info("Retrain complete: %s", metrics)
+    except Exception as exc:
+        ts["status"] = "error"
+        ts["error"] = str(exc)
+        ts["finished_at"] = datetime.now(timezone.utc).isoformat()
+        logger.error("Retrain failed: %s", exc, exc_info=True)
+
+
+@app.post("/feedback", tags=["training"])
+def submit_feedback(items: list[FeedbackRow]):
+    """
+    Submit labeled promo rows as feedback for future retraining.
+
+    Each row must include `should_move` (0/1) and optionally
+    `uplift_if_optimised` (float). Rows are appended to data/feedback.csv.
+    Call POST /retrain once you have accumulated enough rows.
+    """
+    rows = [item.model_dump() for item in items]
+    new_df = pd.DataFrame(rows)
+
+    if FEEDBACK_PATH.exists():
+        existing = pd.read_csv(FEEDBACK_PATH)
+        combined = pd.concat([existing, new_df], ignore_index=True)
+    else:
+        combined = new_df
+
+    combined.to_csv(FEEDBACK_PATH, index=False)
+    logger.info("Feedback: %d new rows appended (total %d)", len(new_df), len(combined))
+    return {"accepted": len(new_df), "total_feedback_rows": len(combined)}
+
+
+@app.post("/retrain", tags=["training"])
+def trigger_retrain(incremental: bool = True, n_new_trees: int = 100, min_rows: int = 10):
+    """
+    Trigger model retraining from accumulated feedback data (data/feedback.csv).
+
+    Set incremental=true (default) to warm-start the existing model with new
+    trees — fast, suitable for frequent small updates.
+    Set incremental=false for a full retrain from scratch — slower but resets
+    the model to the new data distribution.
+
+    Training runs in a background thread; poll GET /retrain/status to check progress.
+    After completion the models are hot-reloaded automatically (no restart needed).
+    """
+    if _state["training"]["status"] == "running":
+        raise HTTPException(status_code=409, detail="Training already in progress")
+
+    if not FEEDBACK_PATH.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No feedback data found. Submit labeled rows via POST /feedback first.",
+        )
+
+    df = pd.read_csv(FEEDBACK_PATH)
+    if len(df) < min_rows:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Need at least {min_rows} feedback rows, got {len(df)}. "
+                   f"Submit more via POST /feedback.",
+        )
+
+    t = threading.Thread(
+        target=_run_training, args=(df, incremental, n_new_trees), daemon=True
+    )
+    t.start()
+    return {"status": "started", "rows": len(df), "incremental": incremental}
+
+
+@app.post("/retrain/upload", tags=["training"])
+async def retrain_upload(
+    file: UploadFile = File(...),
+    incremental: bool = False,
+    n_new_trees: int = 100,
+):
+    """
+    Upload a labeled CSV and immediately trigger model retraining.
+
+    The CSV must contain `should_move` (0/1) and `uplift_if_optimised` (float)
+    columns in addition to the standard promo feature columns.
+    Leaky post-hoc columns are dropped automatically.
+
+    Training runs in a background thread — poll GET /retrain/status to track progress.
+    """
+    if _state["training"]["status"] == "running":
+        raise HTTPException(status_code=409, detail="Training already in progress")
+
+    if not file.filename.endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are accepted")
+
+    try:
+        contents = await file.read()
+        if len(contents) > MAX_UPLOAD_BYTES:
+            raise HTTPException(
+                status_code=413,
+                detail=f"File too large ({len(contents)//1024//1024} MB). Limit is {MAX_UPLOAD_MB} MB.",
+            )
+        df = pd.read_csv(io.BytesIO(contents))
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Could not parse CSV: {exc}")
+
+    missing_labels = [c for c in ["should_move", "uplift_if_optimised"] if c not in df.columns]
+    if missing_labels:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Training CSV missing required label columns: {missing_labels}. "
+                   f"For prediction-only CSVs use POST /predict/upload instead.",
+        )
+
+    # Persist uploaded training data so /retrain can reuse it later
+    df.to_csv(FEEDBACK_PATH, index=False)
+    logger.info("Retrain upload: %d rows, incremental=%s", len(df), incremental)
+
+    t = threading.Thread(
+        target=_run_training, args=(df, incremental, n_new_trees), daemon=True
+    )
+    t.start()
+    return {"status": "started", "rows": len(df), "incremental": incremental, "filename": file.filename}
+
+
+@app.get("/retrain/status", tags=["training"])
+def retrain_status():
+    """Check the status of the current or most recent retraining run."""
+    return _state["training"]

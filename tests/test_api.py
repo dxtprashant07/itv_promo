@@ -5,6 +5,7 @@ Uses mocked XGBoost models so the test suite runs without model artifacts.
 """
 
 import numpy as np
+import pandas as pd
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import MagicMock, patch
@@ -49,6 +50,13 @@ def set_state(mock_cls_model, mock_reg_model, mock_schema):
     _state["schema"] = mock_schema
     _state["ready"] = True
     _state["error"] = None
+    _state["training"] = {
+        "status": "idle",
+        "started_at": None,
+        "finished_at": None,
+        "metrics": None,
+        "error": None,
+    }
 
 
 @pytest.fixture(scope="session")
@@ -224,3 +232,160 @@ class TestReload:
             r = client.post("/reload")
             assert r.status_code == 500
             assert "pkl missing" in r.json()["detail"]
+
+
+# ---------------------------------------------------------------------------
+# /feedback
+# ---------------------------------------------------------------------------
+
+class TestFeedback:
+    def test_submit_single_row(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "feedback.csv")
+        r = client.post("/feedback", json=[{
+            "promo_title": "Test Show",
+            "hour": 21,
+            "should_move": 1,
+            "uplift_if_optimised": 0.35,
+        }])
+        assert r.status_code == 200
+        body = r.json()
+        assert body["accepted"] == 1
+        assert body["total_feedback_rows"] == 1
+
+    def test_submit_appends_rows(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "feedback.csv")
+        client.post("/feedback", json=[{"should_move": 0}])
+        r = client.post("/feedback", json=[{"should_move": 1}, {"should_move": 0}])
+        body = r.json()
+        assert body["accepted"] == 2
+        assert body["total_feedback_rows"] == 3
+
+    def test_missing_should_move_rejected(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "feedback.csv")
+        r = client.post("/feedback", json=[{"promo_title": "No Label"}])
+        assert r.status_code == 422
+
+    def test_should_move_out_of_range_rejected(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "feedback.csv")
+        r = client.post("/feedback", json=[{"should_move": 5}])
+        assert r.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# /retrain/status
+# ---------------------------------------------------------------------------
+
+class TestRetrainStatus:
+    def test_returns_idle_by_default(self, client):
+        r = client.get("/retrain/status")
+        assert r.status_code == 200
+        assert r.json()["status"] == "idle"
+
+    def test_reflects_updated_state(self, client):
+        from main import _state
+        _state["training"]["status"] = "done"
+        _state["training"]["metrics"] = {"pr_auc": 0.75}
+        r = client.get("/retrain/status")
+        assert r.json()["status"] == "done"
+        assert r.json()["metrics"]["pr_auc"] == 0.75
+
+
+# ---------------------------------------------------------------------------
+# /retrain
+# ---------------------------------------------------------------------------
+
+class TestRetrain:
+    def test_404_when_no_feedback_file(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "nonexistent.csv")
+        r = client.post("/retrain")
+        assert r.status_code == 404
+
+    def test_400_when_too_few_rows(self, client, tmp_path, monkeypatch):
+        path = tmp_path / "feedback.csv"
+        pd.DataFrame({"should_move": [0, 1]}).to_csv(path, index=False)
+        monkeypatch.setattr("main.FEEDBACK_PATH", path)
+        r = client.post("/retrain", params={"min_rows": 10})
+        assert r.status_code == 400
+        assert "10" in r.json()["detail"]
+
+    def test_409_when_already_running(self, client):
+        from main import _state
+        _state["training"]["status"] = "running"
+        r = client.post("/retrain")
+        assert r.status_code == 409
+
+    def test_starts_when_enough_rows(self, client, tmp_path, monkeypatch):
+        path = tmp_path / "feedback.csv"
+        df = pd.DataFrame({
+            "should_move": [0, 1] * 10,
+            "uplift_if_optimised": [0.0, 0.5] * 10,
+        })
+        df.to_csv(path, index=False)
+        monkeypatch.setattr("main.FEEDBACK_PATH", path)
+
+        with patch("main.threading.Thread") as mock_thread:
+            mock_thread.return_value.start = lambda: None
+            r = client.post("/retrain", params={"min_rows": 5})
+        assert r.status_code == 200
+        body = r.json()
+        assert body["status"] == "started"
+        assert body["rows"] == 20
+
+
+# ---------------------------------------------------------------------------
+# /retrain/upload
+# ---------------------------------------------------------------------------
+
+class TestRetrainUpload:
+    def _labeled_csv_bytes(self, n: int = 25) -> bytes:
+        import io
+        rng = np.random.default_rng(0)
+        df = pd.DataFrame({
+            "should_move": rng.integers(0, 2, n),
+            "uplift_if_optimised": rng.uniform(0, 1, n),
+            "hour": rng.integers(0, 24, n),
+        })
+        buf = io.BytesIO()
+        df.to_csv(buf, index=False)
+        return buf.getvalue()
+
+    def test_rejects_non_csv(self, client):
+        r = client.post(
+            "/retrain/upload",
+            files={"file": ("data.xlsx", b"binary", "application/vnd.ms-excel")},
+        )
+        assert r.status_code == 400
+
+    def test_rejects_missing_labels(self, client):
+        import io
+        df = pd.DataFrame({"hour": [20, 21], "channel": ["ITV1", "ITV2"]})
+        buf = io.BytesIO()
+        df.to_csv(buf, index=False)
+        r = client.post(
+            "/retrain/upload",
+            files={"file": ("data.csv", buf.getvalue(), "text/csv")},
+        )
+        assert r.status_code == 400
+        assert "should_move" in r.json()["detail"]
+
+    def test_409_when_already_running(self, client):
+        from main import _state
+        _state["training"]["status"] = "running"
+        r = client.post(
+            "/retrain/upload",
+            files={"file": ("x.csv", b"should_move\n1\n0", "text/csv")},
+        )
+        assert r.status_code == 409
+
+    def test_starts_training_with_valid_csv(self, client, tmp_path, monkeypatch):
+        monkeypatch.setattr("main.FEEDBACK_PATH", tmp_path / "feedback.csv")
+        with patch("main.threading.Thread") as mock_thread:
+            mock_thread.return_value.start = lambda: None
+            r = client.post(
+                "/retrain/upload",
+                files={"file": ("labeled.csv", self._labeled_csv_bytes(), "text/csv")},
+            )
+        assert r.status_code == 200
+        body = r.json()
+        assert body["status"] == "started"
+        assert body["rows"] == 25

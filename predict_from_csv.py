@@ -18,32 +18,7 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-# ── Config ────────────────────────────────────────────────────────────────────
-
-# Exactly the 37 features the model was trained on
-FEATURE_COLS = [
-    "channel", "promo_title", "content_type", "event_type", "genre_guess",
-    "promo_length_seconds", "hour", "minute", "day_of_week", "is_weekend",
-    "time_band", "promo_position_type", "promo_in_break", "break_event_position",
-    "break_total_events", "break_position_pct", "preceded_by_break",
-    "lead_to_next_program_min", "prev_promo_title", "next_promo_title",
-    "weather_station", "weather_tmax_c", "weather_tmin_c", "weather_rain_mm",
-    "weather_sun_hours", "weather_bad_index", "weather_indoor_viewing_index",
-    "ott_avg_watch_pct", "ott_dropoff_prob", "ott_hook_strength", "ott_visual_intensity",
-    "netflix_popularity_score", "netflix_rating_mean",
-    "synthetic_premiere_probability", "synthetic_production_year_mean",
-    "promo_fatigue_index", "attention_context_score",
-]
-
-# Columns to keep from the source CSV for context (not sent to model)
-KEEP_COLS = ["datetime", "house_number", "should_move", "uplift_if_optimised"]
-
-# Columns that are post-hoc leaks — never send these
-LEAKY_COLS = [
-    "actual_status", "actual_start_offset_seconds", "actual_duration_seconds",
-    "duration_diff_seconds", "was_missed", "observed_effectiveness_score",
-    "best_possible_score",
-]
+from config import FEATURE_COLS, LEAKY_COLUMNS as LEAKY_COLS, PASSTHROUGH_COLS as KEEP_COLS
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

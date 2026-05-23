@@ -18,6 +18,8 @@ from pathlib import Path
 
 import joblib
 import numpy as np
+
+from config import FEATURE_COLS as _FEATURE_COLS_LIST, LEAKY_COLUMNS as _LEAKY_COLS
 import pandas as pd
 import requests
 import streamlit as st
@@ -47,6 +49,36 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+/* ── Global text colour — force black everywhere ────────────────────────── */
+html, body,
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewContainer"] * {
+    color: #111 !important;
+}
+/* Restore white text on dark backgrounds */
+.ancast-header, .ancast-header *,
+.ancast-logo, .ancast-logo *,
+.channel-pill, .date-nav, .stat-block,
+.stat-label, .stat-value, .stat-sub,
+.avatar,
+.daypart-tab.active, .daypart-tab.active *,
+.density-btn.active, .density-btn.active * {
+    color: white !important;
+}
+/* Streamlit widget labels, help text, captions */
+label, .stSelectbox label, .stTextInput label,
+.stSlider label, .stNumberInput label,
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stWidgetLabel"] { color: #111 !important; }
+/* Expander headers */
+[data-testid="stExpander"] summary,
+[data-testid="stExpander"] summary p { color: #111 !important; }
+/* Metric labels/values */
+[data-testid="stMetricLabel"], [data-testid="stMetricValue"],
+[data-testid="stMetricDelta"] { color: #111 !important; }
+/* Selectbox + input text */
+[data-baseweb="select"] span, [data-baseweb="input"] input { color: #111 !important; }
+
 /* ── Layout ─────────────────────────────────────────────────────────────── */
 [data-testid="stAppViewContainer"] { background: #f0ebe0; }
 [data-testid="stHeader"] { background: transparent; }
@@ -298,6 +330,8 @@ if "last_refresh" not in st.session_state:
     st.session_state.last_refresh = time.time()
 if "predictions_cache" not in st.session_state:
     st.session_state.predictions_cache = {}
+if "real_schedule" not in st.session_state:
+    st.session_state.real_schedule = None
 
 # ---------------------------------------------------------------------------
 # Mock schedule data
@@ -367,19 +401,7 @@ def check_api_health() -> bool:
         return False
 
 
-_FEATURE_KEYS = {
-    "channel", "promo_title", "content_type", "event_type", "genre_guess",
-    "promo_length_seconds", "hour", "minute", "day_of_week", "is_weekend",
-    "time_band", "promo_position_type", "promo_in_break", "break_event_position",
-    "break_total_events", "break_position_pct", "preceded_by_break",
-    "lead_to_next_program_min", "prev_promo_title", "next_promo_title",
-    "weather_station", "weather_tmax_c", "weather_tmin_c", "weather_rain_mm",
-    "weather_sun_hours", "weather_bad_index", "weather_indoor_viewing_index",
-    "ott_avg_watch_pct", "ott_dropoff_prob", "ott_hook_strength", "ott_visual_intensity",
-    "netflix_popularity_score", "netflix_rating_mean",
-    "synthetic_premiere_probability", "synthetic_production_year_mean",
-    "promo_fatigue_index", "attention_context_score",
-}
+_FEATURE_KEYS = set(_FEATURE_COLS_LIST)
 
 def fetch_predictions(schedule: list[dict]) -> list[dict]:
     """Call /predict/batch with only model feature fields."""
@@ -445,6 +467,51 @@ def local_predictions(rows: list[dict]) -> list[dict]:
         }
         for m, p, u in zip(moves, probas, uplifts)
     ]
+
+
+def csv_to_schedule_rows(df: pd.DataFrame) -> list[dict]:
+    """Convert a real promo schedule CSV into MOCK_SCHEDULE-compatible row dicts."""
+    GENRE_DISPLAY = {
+        "history_doc": "History Doc", "general": "General", "promo": "Promo",
+        "drama": "Drama", "comedy": "Comedy", "reality": "Reality",
+        "sport": "Sport", "news": "News", "factual": "Factual",
+    }
+
+    def _hour_to_daypart(h: int) -> str:
+        if 6 <= h < 10:  return "Breakfast"
+        if 10 <= h < 18: return "Daytime"
+        if 18 <= h < 23: return "Peak"
+        return "Late"
+
+    rows = []
+    for _, r in df.iterrows():
+        hour   = int(r["hour"])   if "hour"   in r.index and pd.notna(r["hour"])   else 12
+        minute = int(r["minute"]) if "minute" in r.index and pd.notna(r["minute"]) else 0
+
+        raw_title   = str(r["promo_title"]) if "promo_title" in r.index and pd.notna(r.get("promo_title")) else "Unknown"
+        genre_guess = str(r["genre_guess"]) if "genre_guess" in r.index and pd.notna(r.get("genre_guess")) else "general"
+        promo_len   = float(r["promo_length_seconds"]) if "promo_length_seconds" in r.index and pd.notna(r.get("promo_length_seconds")) else 20.0
+        content_t   = str(r["content_type"])         if "content_type"         in r.index and pd.notna(r.get("content_type"))         else "Promo"
+        pos_type    = str(r["promo_position_type"])  if "promo_position_type"  in r.index and pd.notna(r.get("promo_position_type"))  else "break_middle"
+
+        title        = raw_title.split(" - ")[0] if " - " in raw_title else raw_title
+        dur_m, dur_s = int(promo_len // 60), int(promo_len % 60)
+
+        row_dict = {
+            "tx_time":          f"{hour:02d}:{minute:02d}",
+            "title":            title,
+            "genre_display":    GENRE_DISPLAY.get(genre_guess, genre_guess.replace("_", " ").title()),
+            "duration":         f"{dur_m:02d}:{dur_s:02d}",
+            "promo_type_display": f"{content_t} · {pos_type.replace('_', ' ').title()}",
+            "daypart":          _hour_to_daypart(hour),
+        }
+        # Carry all feature columns through (NaN allowed — model handles it natively)
+        for col in _FEATURE_KEYS:
+            if col in r.index:
+                val = r[col]
+                row_dict[col] = (val.item() if hasattr(val, "item") else val) if pd.notna(val) else None
+        rows.append(row_dict)
+    return rows
 
 
 def mock_predictions(schedule: list[dict]) -> list[dict]:
@@ -544,7 +611,16 @@ def load_data(refresh_key: int):
 
 
 refresh_key = int(time.time() // REFRESH_INTERVAL_SEC)
-data, api_live = load_data(refresh_key)
+
+if st.session_state.real_schedule:
+    api_live = check_api_health()
+    schedule_src = st.session_state.real_schedule
+    preds = fetch_predictions(schedule_src) if api_live else local_predictions(schedule_src)
+    if not preds:
+        preds = local_predictions(schedule_src)
+    data = [{**row, **pred} for row, pred in zip(schedule_src, preds)]
+else:
+    data, api_live = load_data(refresh_key)
 
 # ---------------------------------------------------------------------------
 # Derived stats
@@ -555,6 +631,18 @@ avg_conf      = sum(r["move_probability"] for r in data) / len(data) * 100
 coverage_pct  = round(len(data) / (len(data) + 5) * 100)
 last_flag_min = 23
 today_str     = datetime.now().strftime("%a %d %b")
+
+# Live weather (cached for 30 min to avoid hammering the API on every rerun)
+@st.cache_data(ttl=1800, show_spinner=False)
+def _live_weather_now(station: str) -> dict:
+    try:
+        from fetch_live_data import fetch_weather
+        from datetime import date as _date
+        return fetch_weather(station, _date.today())
+    except Exception:
+        return {}
+
+_wx = _live_weather_now("heathrow")
 
 # ---------------------------------------------------------------------------
 # Header
@@ -595,10 +683,75 @@ st.markdown(f"""
         <div class="stat-value">{coverage_pct}%</div>
         <div class="stat-sub">Of upcoming slots</div>
     </div>
+    <div class="stat-block">
+        <div class="stat-label">Live Weather (London)</div>
+        <div class="stat-value" style="font-size:13px;line-height:1.4">{_wx.get('weather_tmax_c','?')}°C</div>
+        <div class="stat-sub">{_wx.get('weather_rain_mm','?')}mm · {_wx.get('weather_sun_hours','?')}h sun</div>
+    </div>
     <div class="header-spacer"></div>
     <div class="avatar">BA</div>
 </div>
 """, unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
+# Real schedule upload (replaces mock data when a CSV is provided)
+# ---------------------------------------------------------------------------
+
+with st.expander("📂  Load real schedule data (with live enrichment)", expanded=False):
+    st.markdown(
+        "Upload your promo schedule CSV and optionally auto-enrich it with **live weather** "
+        "(Open-Meteo, free) and **content metadata** (TMDB, free key). "
+        "The only required column is `promo_title`. Add `datetime` and break columns for best results."
+    )
+
+    enrich_col1, enrich_col2 = st.columns([3, 2])
+    with enrich_col1:
+        sched_file = st.file_uploader(
+            "Schedule CSV", type=["csv"], key="schedule_uploader",
+            label_visibility="collapsed",
+        )
+    with enrich_col2:
+        tmdb_key_input = st.text_input(
+            "TMDB API key (optional)",
+            type="password",
+            placeholder="Get free at themoviedb.org/settings/api",
+            help="Enables real content popularity & ratings data (netflix_popularity_score, netflix_rating_mean)",
+        )
+        enrich_weather = st.checkbox("Auto-enrich with live weather", value=True,
+                                     help="Fetches real temperature, rain, and sun hours from Open-Meteo (no key needed)")
+
+    col_load, col_clear = st.columns([3, 1])
+    with col_load:
+        if sched_file is not None:
+            btn_label = "Enrich with live data + load as schedule" if enrich_weather else "Load as schedule"
+            if st.button(btn_label, use_container_width=True, type="primary"):
+                try:
+                    sched_df = pd.read_csv(io.BytesIO(sched_file.getvalue()))
+                    sched_df = sched_df.drop(columns=[c for c in _LEAKY_COLS if c in sched_df.columns])
+
+                    if enrich_weather:
+                        from fetch_live_data import enrich_schedule
+                        with st.spinner("Fetching live weather + computing derived features..."):
+                            sched_df = enrich_schedule(
+                                sched_df,
+                                tmdb_api_key=tmdb_key_input.strip() or None,
+                                verbose=False,
+                            )
+                        st.success(f"Enriched with live weather data!")
+
+                    st.session_state.real_schedule = csv_to_schedule_rows(sched_df)
+                    st.success(f"Loaded {len(st.session_state.real_schedule):,} rows from {sched_file.name}")
+                    st.rerun()
+                except Exception as exc:
+                    st.error(f"Could not load schedule: {exc}")
+    with col_clear:
+        if st.session_state.real_schedule:
+            if st.button("Reset to sample data", use_container_width=True):
+                st.session_state.real_schedule = None
+                st.rerun()
+
+    if st.session_state.real_schedule:
+        st.info(f"Currently using real schedule: **{len(st.session_state.real_schedule):,} rows**")
 
 # ---------------------------------------------------------------------------
 # Advisory banner
@@ -918,11 +1071,7 @@ if uploaded_file is not None:
     with st.spinner(f"Processing {uploaded_file.name}…"):
         try:
             df_up = pd.read_csv(io.BytesIO(uploaded_file.getvalue()))
-            leaky = {
-                "actual_status", "actual_start_offset_seconds", "actual_duration_seconds",
-                "duration_diff_seconds", "was_missed", "observed_effectiveness_score", "best_possible_score",
-            }
-            df_up = df_up.drop(columns=[c for c in leaky if c in df_up.columns])
+            df_up = df_up.drop(columns=[c for c in _LEAKY_COLS if c in df_up.columns])
 
             if api_live:
                 response = requests.post(
@@ -966,8 +1115,137 @@ if uploaded_file is not None:
             st.error(f"Upload failed: {e}")
 
 # ---------------------------------------------------------------------------
-# Auto-refresh
+# Retrain Model
 # ---------------------------------------------------------------------------
 
-time.sleep(1)
-st.rerun()
+st.markdown("""
+<div style="margin:24px 28px 0 28px; border-top:2px solid #ddd8cc; padding-top:20px;
+     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <div style="font-size:16px;font-weight:700;color:#1a1f38;margin-bottom:2px;">
+    Retrain / Update the Model
+  </div>
+  <div style="font-size:12px;color:#888;margin-bottom:16px;">
+    Upload a <strong>labeled</strong> CSV (must include <code>should_move</code> and
+    <code>uplift_if_optimised</code> columns) to update the model with real data.
+    Choose <em>Incremental</em> to add trees to the existing model (fast, good for
+    small new batches) or <em>Full retrain</em> to rebuild from scratch.
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
+with st.expander("🔁  Retrain model with labeled data", expanded=False):
+    rt_col1, rt_col2 = st.columns([3, 2])
+
+    with rt_col1:
+        train_file = st.file_uploader(
+            "Labeled training CSV",
+            type=["csv"], key="train_uploader",
+            label_visibility="collapsed",
+            help="Must include should_move (0/1) and uplift_if_optimised (float) columns.",
+        )
+
+    with rt_col2:
+        retrain_mode = st.radio(
+            "Training mode",
+            ["Incremental (add trees)", "Full retrain from scratch"],
+            index=0,
+            help=(
+                "Incremental: warm-start the existing model — fast, good for small updates.\n"
+                "Full retrain: rebuild the model from this data only — slower but resets distribution."
+            ),
+        )
+        n_trees = st.number_input(
+            "New trees (incremental only)", min_value=10, max_value=500, value=100, step=10,
+            help="Ignored for full retrain.",
+        )
+
+    if train_file is not None:
+        is_incremental = "Incremental" in retrain_mode
+        btn_label = "Start incremental update" if is_incremental else "Start full retrain"
+        if st.button(btn_label, use_container_width=True, type="primary"):
+            if api_live:
+                try:
+                    resp = requests.post(
+                        f"{API_URL}/retrain/upload",
+                        files={"file": (train_file.name, train_file.getvalue(), "text/csv")},
+                        params={"incremental": str(is_incremental).lower(), "n_new_trees": int(n_trees)},
+                        timeout=15,
+                    )
+                    resp.raise_for_status()
+                    info = resp.json()
+                    st.success(
+                        f"Training started in background — {info['rows']:,} rows, "
+                        f"{'incremental' if info['incremental'] else 'full retrain'}. "
+                        f"Check status below."
+                    )
+                except Exception as exc:
+                    st.error(f"Could not start retraining: {exc}")
+            else:
+                # API is offline — run training locally in-process
+                try:
+                    from trainer import train_models, LEAKY_COLUMNS as _LEAKY
+                    from pathlib import Path as _Path
+                    import pandas as _pd
+
+                    _df = _pd.read_csv(io.BytesIO(train_file.getvalue()))
+                    missing_lbl = [c for c in ["should_move", "uplift_if_optimised"] if c not in _df.columns]
+                    if missing_lbl:
+                        st.error(f"CSV missing required label columns: {missing_lbl}")
+                    else:
+                        with st.spinner("Training in progress (API offline — running locally)..."):
+                            metrics = train_models(
+                                _df, _Path("model"),
+                                incremental=is_incremental,
+                                n_new_trees=int(n_trees),
+                            )
+                        st.success(
+                            f"Training complete!  PR-AUC={metrics['pr_auc']}  "
+                            f"R²={metrics['r2']}  rows={metrics['rows_trained']:,}. "
+                            "Reload the page to use the updated model."
+                        )
+                        st.json(metrics)
+                except Exception as exc:
+                    st.error(f"Local training failed: {exc}")
+
+    # Status check
+    if api_live:
+        if st.button("Refresh training status", use_container_width=False):
+            try:
+                status_resp = requests.get(f"{API_URL}/retrain/status", timeout=5)
+                status_resp.raise_for_status()
+                s = status_resp.json()
+                if s["status"] == "running":
+                    st.info(f"Training in progress... (started {s['started_at']})")
+                elif s["status"] == "done":
+                    st.success(f"Last training completed at {s['finished_at']}")
+                    if s["metrics"]:
+                        st.json(s["metrics"])
+                elif s["status"] == "error":
+                    st.error(f"Last training failed: {s['error']}")
+                else:
+                    st.write("No training job has been run yet in this session.")
+            except Exception as exc:
+                st.warning(f"Could not fetch status: {exc}")
+
+    st.markdown("""
+    <div style="font-size:11px;color:#888;margin-top:8px;line-height:1.7">
+    <b>Running without the API?</b> You can also train from the command line:<br>
+    <code>python train_local.py --data your_labeled_data.csv</code><br>
+    <code>python train_local.py --data new_batch.csv --incremental</code>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ---------------------------------------------------------------------------
+# Manual refresh
+# ---------------------------------------------------------------------------
+
+st.markdown(
+    "<div style='margin:8px 28px;font-size:11px;color:#aaa'>"
+    f"Last refreshed: {datetime.now().strftime('%H:%M:%S')} &nbsp;·&nbsp; "
+    "Predictions refresh automatically when you interact with any filter above."
+    "</div>",
+    unsafe_allow_html=True,
+)
+if st.button("↻  Refresh predictions now", use_container_width=False):
+    st.cache_data.clear()
+    st.rerun()
